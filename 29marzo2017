@@ -1,0 +1,89 @@
+rm(list = ls())
+#CREAR LISTAS O SECUENCIAS
+seq(0,15, by=0.3)
+polizas<- (0:15)
+n<- 15
+prob_4= dbinom(4,n,prob = 0.25)
+prob_4
+prob<- dbinom(polizas,n,prob = 0.25)
+#la funcion cbind permite agrupar objetos
+informef<- cbind(polizas,prob)
+informef
+#grafico de las probabilidades
+plot(polizas, prob, type = "b", xlab = "polizas a reclamar")
+#otra forma de graficatr
+plot(polizas,prob, type = "l", xlab = "polizas")
+points(polizas,prob)
+#calculo de las probabilidades menores o iguales
+f<- cumsum(prob)
+f
+#otra forma de calculo
+fx3<- pbinom(3,n,prob = 0.25)
+fx3
+Fx<- pbinom(polizas,n, prob = 0.25)
+Fx
+
+
+###############
+informef<- cbind(polizas,Fx)
+informef
+plot(polizas,Fx, type = "s")
+plot(polizas, Fx, type = "b")
+points(polizas,prob,col="red")
+#calculo de la media y varianza
+#E[X]=xi*prob(xi)
+media<- sum(polizas*prob)
+media
+media2<- n*prob
+media2
+#varianza
+segundo<- sum((polizas^2)*prob)
+segundo
+var<- segundo-media^2
+var
+#var con parametros
+var1<- n*0.25*(1-0.25)
+var1
+var2<- sum(((polizas-media)^2)*prob)
+var2
+#ejemplo del calculo de percentiles
+#calcule el valor que deja por debajo al 30% de los siniestros
+q30<- qbinom(0.3,n,prob = 0.25)
+q30
+percentiles<- seq(0,1,by=0.05)
+percentiles
+lpercent<- qbinom(percentiles,n,prob = 0.25)
+informe_p<- cbind(percentiles*100,lpercent)
+informe_p
+plot(informe_p, type = "b", xlab = "percentiles", ylab = "siniestros")
+#$tercer momento
+sesgo<- (1-2*0.25)/(n*0.25*(1-.25))^0.5
+sesgo
+#obtener las siguioentes probabilidades
+#Tener 9 siniestyros
+nueve<- dbinom(9,n,prob = 0.25)
+nueve
+#probabilidad de tener menor o igual a 5
+cinco<- pbinom(5,n,prob = 0.25)
+cinco
+#tener mas de 7 siniestros
+siete<- 1-pbinom(7,n,prob = 0.25)
+siete
+#probabilidad de tener 8 o mas siniestrsos
+ocho<- 1-pbinom(7,n,prob = 0.25)
+ocho
+#Tener al menos 4 y a lo mucho 11 siniestros 
+entre4y11<- pbinom(11,n,prob = 0.25)-pbinom(3,n,prob = 0.25)
+entre4y11
+#tener entre 1 y ocho siniestros 
+entre1y8<- pbinom(7,n,prob = 0.25)-pbinom(1,n,prob = 0.25)
+entre1y8
+
+
+##########simulados_gm<- rbinom(10000,n,prob=p)
+###histograma
+#hist(simulados_gm)
+#media
+#media<- mean(simulados_gm)
+#varianza
+#var<- var(simulafos_gm)
